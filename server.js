@@ -12,7 +12,7 @@ if (!process.env.GEMINI_API_KEY) {
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-// PROJEKT STRONY NASTĘPNEJ GENERACJI (Tailwind CSS + Animacje)
+// KOMPLETNA STRONA: NOWOCZESNY DESIGN + POPRAWIONY OPIS + STATYSTYKI UMAMI
 app.get('/', (req, res) => {
     res.send(`
         <!DOCTYPE html>
@@ -21,6 +21,9 @@ app.get('/', (req, res) => {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>KtoTymRzadzi.ai — Prześwietl Korporacyjne Imperia</title>
+            
+            <script defer src="https://cloud.umami.is/script.js" data-website-id="1edebaf5-6455-46af-bfb2-7b59747bf0a3"></script>
+
             <script src="https://cdn.tailwindcss.com"></script>
             <script>
                 tailwind.config = {
@@ -113,7 +116,6 @@ app.get('/', (req, res) => {
                     
                     if(!firma) return;
                     
-                    // Pokazujemy loader, chowamy poprzednie wyniki
                     loader.classList.remove('hidden');
                     wynik.classList.add('hidden');
                     btn.disabled = true;
@@ -123,7 +125,8 @@ app.get('/', (req, res) => {
                         const dane = await res.json();
                         
                         document.getElementById('title').innerText = "🏢 " + dane.korporacja;
-                        document.getElementById('desc').innerText = dane.opis;
+                        // POPRAWKA: Wyświetlamy opis poprawnie
+                        document.getElementById('desc').innerText = dane.opis || '';
                         
                         let gridHtml = '';
                         dane.marki.forEach(m => {
